@@ -44,7 +44,9 @@ const solution = (t, arr) => {
         const [x, y] = queue.shift();
 
         if (field[x][y] === 0) continue;
-        else field[x][y] = 0;
+
+        if (visitedChecker[x][y]) continue;
+        else visitedChecker[x][y] = true;
 
         for (const [dx, dy] of direction) {
           const targetX = x + dx;
@@ -72,6 +74,6 @@ const solution = (t, arr) => {
   return answer.join('\n');
 };
 
-console.log(solution(targetInputs, rest));
+// console.log(solution(targetInputs, rest));
 
 module.exports = { solution };
