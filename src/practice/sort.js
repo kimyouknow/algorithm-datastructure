@@ -40,9 +40,24 @@ const selectionSortWithMin = (arr) => {
   return sortedArr;
 };
 
-console.log(selectionSortWithMin(arr1));
+const bubbleSort = (arr) => {
+  const sortedArr = [...arr];
+  const length = sortedArr.length;
+  for (let i = 0; i < length; i++) {
+    for (let j = 0; j < length - 1 - i; j++) {
+      const current = sortedArr[j];
+      const next = sortedArr[j + 1];
+      if (current > next) {
+        sortedArr[j + 1] = current;
+        sortedArr[j] = next;
+      }
+    }
+  }
+  return sortedArr;
+};
 
 module.exports = {
   selectionSortWithMax,
   selectionSortWithMin,
+  bubbleSort,
 };
