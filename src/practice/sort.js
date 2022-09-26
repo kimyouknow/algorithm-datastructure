@@ -56,6 +56,23 @@ const bubbleSort = (arr) => {
   return sortedArr;
 };
 
+const insertionSort = (arr) => {
+  const sortedArr = [...arr];
+  const length = sortedArr.length;
+  for (let i = 1; i < length; i++) {
+    let temp = sortedArr[i];
+    let idx = i - 1;
+    while (idx >= 0 && sortedArr[idx] > temp) {
+      sortedArr[idx + 1] = sortedArr[idx];
+      idx--;
+    }
+    sortedArr[idx + 1] = temp;
+  }
+  return sortedArr;
+};
+
+console.log(insertionSort(arr1));
+
 module.exports = {
   selectionSortWithMax,
   selectionSortWithMin,
