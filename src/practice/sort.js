@@ -71,7 +71,32 @@ const insertionSort = (arr) => {
   return sortedArr;
 };
 
-console.log(insertionSort(arr1));
+const merge = (left, right) => {
+  const mergedArr = [];
+  let leftIdx = 0;
+  let rightIdx = 0;
+  while (left.length > leftIdx && right.length > rightIdx) {
+    if (left[leftIdx] < right[rightIdx]) {
+      mergedArr.push(left[leftIdx]);
+      leftIdx++;
+    } else {
+      mergedArr.push(right[rightIdx]);
+      rightIdx++;
+    }
+  }
+  return mergedArr.concat(left.slice(leftIdx), right.slice(rightIdx));
+};
+
+const mergeSort = (arr) => {
+  if (arr.length < 2) return arr;
+
+  const mid = Math.floor(arr.length / 2);
+  const left = mergeSort(arr.slice(0, mid));
+  const right = mergeSort(arr.slice(mid));
+  return merge(left, right);
+};
+
+console.log(mergeSort(arr1));
 
 module.exports = {
   selectionSortWithMax,
