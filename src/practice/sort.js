@@ -96,7 +96,59 @@ const mergeSort = (arr) => {
   return merge(left, right);
 };
 
-console.log(mergeSort(arr1));
+const quickSortNotInPlace = (arr) => {
+  if (arr.length < 2) return arr;
+
+  const pivot = [arr[0]];
+  const left = [];
+  const right = [];
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] < pivot) {
+      left.push(arr[i]);
+    } else if (arr[i] > pivot) {
+      right.push(arr[i]);
+    } else {
+      pivot.push(arr[i]);
+    }
+  }
+  return quickSortNotInPlace(left).concat(pivot, quickSortNotInPlace(right));
+};
+
+const quickSortInPlace = (arr) => {
+  const recursive = (leftIdx, rightIdx) => {
+    if (leftIdx >= rightIdx) return;
+    const pivot = Math.floor((leftIdx + rightIdx) / 2);
+    let low = leftIdx;
+    let high = rightIdx;
+    const pivotValue = arr[pivot];
+    // low와 high가 교차하면 종료
+    while (low <= high) {
+      // low가 가리키는 원소가 기준보다 커질때까지 low++
+      while (arr[low] < pivotValue) {
+        low++;
+      }
+      // high가 가리키는 원소가 기준보다 작아질때까지 high--
+      while (arr[high] > pivotValue) {
+        high--;
+      }
+      if (low <= high) {
+        const swap = arr[low];
+        arr[low] = arr[high];
+        arr[high] = swap;
+        low++;
+        high--;
+      }
+    }
+
+    recursive(leftIdx, high);
+    recursive(low, rightIdx);
+  };
+
+  recursive(0, arr.length - 1);
+  return arr;
+};
+
+console.log(quickSortInPlace(arr1));
 
 module.exports = {
   selectionSortWithMax,
