@@ -17,3 +17,30 @@ const binarySearch = (target, sortedArr) => {
   const end = sortedArr.length - 1;
   return binaryRecursion(start, end);
 };
+
+const lower_bound = (target, sortedArr) => {
+  let start = 0;
+  let end = sortedArr.length;
+  while (start < end) {
+    const mid = Math.floor((start + end) / 2);
+    if (sortedArr[mid] >= target) {
+      end = mid;
+    } else {
+      start = mid + 1;
+    }
+  }
+  return start;
+};
+const upper_bound = (target, sortedArr) => {
+  let start = 0;
+  let end = sortedArr.length;
+  while (start < end) {
+    const mid = Math.floor((start + end) / 2);
+    if (sortedArr[mid] > target) {
+      end = mid;
+    } else {
+      start = mid + 1;
+    }
+  }
+  return start;
+};
