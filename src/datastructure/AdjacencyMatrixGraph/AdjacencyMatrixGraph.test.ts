@@ -1,12 +1,12 @@
-import { Graph } from './index';
+import AdjacencyMatrixGraph from './index';
 
 const len = 5;
 
 describe('create Graph instance', () => {
-  const graph = new Graph();
+  const graph = new AdjacencyMatrixGraph();
   graph.create(len);
   it('graph가 Graph 클래스의 인스턴스가 맞습니까?', () => {
-    expect(graph).toBeInstanceOf(Graph);
+    expect(graph).toBeInstanceOf(AdjacencyMatrixGraph);
   });
   it('길이가 n인 graph를 생성하면 이차원배열의 모든 배열의 길이가 n인가요?', () => {
     expect(graph.nodes.length).toBe(len);
@@ -16,13 +16,14 @@ describe('create Graph instance', () => {
     expect(graph.size).toBe(0);
   });
 });
+
 describe('addVertex', () => {
-  let graph: Graph;
+  let graph: AdjacencyMatrixGraph;
   const vertex1Value = '찌미';
   const vertex2Value = '띵동';
   let prevGraphSize: number;
   beforeEach(() => {
-    graph = new Graph();
+    graph = new AdjacencyMatrixGraph();
     graph.create(len);
     prevGraphSize = graph.size;
     graph.addVertex(vertex1Value);
@@ -55,13 +56,13 @@ describe('addVertex', () => {
 });
 
 describe('addEdge', () => {
-  let graph: Graph;
+  let graph: AdjacencyMatrixGraph;
   const vertex1Value = '찌미';
   const vertex2Value = '띵동';
   const vertex3Value = '누리';
   const nullValue = 'empty';
   beforeEach(() => {
-    graph = new Graph();
+    graph = new AdjacencyMatrixGraph();
     graph.create(len);
     graph.addVertex(vertex1Value);
     graph.addVertex(vertex2Value);
@@ -82,7 +83,7 @@ describe('addEdge', () => {
 });
 
 describe('removeVertex', () => {
-  let graph: Graph;
+  let graph: AdjacencyMatrixGraph;
   const vertex1Value = '찌미';
   const vertex2Value = '띵동';
   const vertex3Value = '누리';
@@ -90,7 +91,7 @@ describe('removeVertex', () => {
   let originVertex1Idx: number;
   let prevGraphSize: number;
   beforeEach(() => {
-    graph = new Graph();
+    graph = new AdjacencyMatrixGraph();
     graph.create(len);
     graph.addVertex(vertex1Value);
     graph.addVertex(vertex2Value);
@@ -107,7 +108,7 @@ describe('removeVertex', () => {
     expect(prevGraphSize).toBe(graph.size);
   });
   it('size가 0 이면 실행하지 않는다.', () => {
-    const graph = new Graph();
+    const graph = new AdjacencyMatrixGraph();
     graph.create(0);
     const prevGraph = graph;
     graph.removeVertext(vertex1Value);
@@ -128,13 +129,13 @@ describe('removeVertex', () => {
 });
 
 describe('addEdge', () => {
-  let graph: Graph;
+  let graph: AdjacencyMatrixGraph;
   let prevGraphNodes: Array<Array<number>>;
   const vertex1Value = '찌미';
   const vertex2Value = '띵동';
   const vertex3Value = '누리';
   beforeEach(() => {
-    graph = new Graph();
+    graph = new AdjacencyMatrixGraph();
     graph.create(len);
     graph.addVertex(vertex1Value);
     graph.addVertex(vertex2Value);
@@ -155,7 +156,7 @@ describe('addEdge', () => {
 });
 
 describe('removeEdge', () => {
-  let graph: Graph;
+  let graph: AdjacencyMatrixGraph;
   let prevGraphNodes: Array<Array<number>>;
   let prevGraphSize: number;
   const vertex1Value = '찌미';
@@ -163,7 +164,7 @@ describe('removeEdge', () => {
   const vertex3Value = '누리';
   const nullValue = 'empty';
   beforeEach(() => {
-    graph = new Graph();
+    graph = new AdjacencyMatrixGraph();
     graph.create(len);
     graph.addVertex(vertex1Value);
     graph.addVertex(vertex2Value);

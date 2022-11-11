@@ -1,4 +1,4 @@
-export class Graph {
+export default class AdjacencyMatrixGraph {
   nodes: Array<Array<number>>;
   size: number;
   vertexMap: Array<string | null>;
