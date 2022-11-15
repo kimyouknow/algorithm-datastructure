@@ -1,10 +1,16 @@
 export default class AdjacencyListGraph {
-  private nodes: Map<string, Array<string>>;
+  protected nodes: Map<string, Array<string>>;
   constructor() {
     this.nodes = new Map();
   }
   showNode() {
     return this.nodes;
+  }
+  display() {
+    this.nodes.forEach((value, key) => {
+      console.log('key :>> ', key, '|| value:>>', value.join(' '));
+    });
+    return this;
   }
   addVertex(vertex: string) {
     if (!this.nodes.has(vertex)) {
