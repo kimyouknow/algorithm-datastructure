@@ -1,4 +1,4 @@
-import { getRandomInt } from '@/utils/utils';
+import { getRandomInt } from '@utils/utils';
 import {
   findLastNode,
   INodeElement,
@@ -53,23 +53,13 @@ describe('LinkedList Tester', () => {
       it('push 실행 이후 연결리스트의 인스턴스의 길이가 추가한 길이와 같은가', () => {
         const mockSingleLinkedList = generateInstance();
         mockSingleLinkedList.push(mockNodeHead);
-        handleMethodWithRandomNumber(
-          'push',
-          randomInt,
-          mockSingleLinkedList,
-          mockNodeBody
-        );
+        handleMethodWithRandomNumber('push', randomInt, mockSingleLinkedList, mockNodeBody);
         expect(mockSingleLinkedList.getSize()).toBe(randomInt + 1);
       });
       it('push 실행 이후 연결리스트의 head의 마지막에 push한 노드인지', () => {
         const mockSingleLinkedList = generateInstance();
         mockSingleLinkedList.push(mockNodeHead);
-        handleMethodWithRandomNumber(
-          'push',
-          randomInt,
-          mockSingleLinkedList,
-          mockNodeBody
-        );
+        handleMethodWithRandomNumber('push', randomInt, mockSingleLinkedList, mockNodeBody);
         const head = mockSingleLinkedList.getHead();
         expect(head?.next).not.toBeNull();
         expect(head?.body).toStrictEqual(mockNodeHead);
@@ -77,12 +67,7 @@ describe('LinkedList Tester', () => {
       it('push 실행 이후 연결리스트의 마지막 노드가 새롭게 추가된 노드와 같은가', () => {
         const mockSingleLinkedList = generateInstance();
         mockSingleLinkedList.push(mockNodeHead);
-        handleMethodWithRandomNumber(
-          'push',
-          randomInt,
-          mockSingleLinkedList,
-          mockNodeBody
-        );
+        handleMethodWithRandomNumber('push', randomInt, mockSingleLinkedList, mockNodeBody);
         mockSingleLinkedList.push(mockNodeLast);
         const head = mockSingleLinkedList.getHead();
         const lastNode = head && findLastNode(head);
@@ -125,22 +110,12 @@ describe('LinkedList Tester', () => {
       it('실행 이후 연결리스트의 인스턴스의 길이가 추가한 길이와 같은가', () => {
         const mockSingleLinkedList = generateInstance();
         mockSingleLinkedList.unshift(mockNodeHead);
-        handleMethodWithRandomNumber(
-          'unshift',
-          randomInt,
-          mockSingleLinkedList,
-          mockNodeBody
-        );
+        handleMethodWithRandomNumber('unshift', randomInt, mockSingleLinkedList, mockNodeBody);
         expect(mockSingleLinkedList.getSize()).toBe(randomInt + 1);
       });
       it('연결리스트의 head의 처음에 unshift메서드인지', () => {
         const mockSingleLinkedList = generateInstance();
-        handleMethodWithRandomNumber(
-          'unshift',
-          randomInt,
-          mockSingleLinkedList,
-          mockNodeBody
-        );
+        handleMethodWithRandomNumber('unshift', randomInt, mockSingleLinkedList, mockNodeBody);
         mockSingleLinkedList.unshift(mockNodeLast);
         const head = mockSingleLinkedList.getHead();
         expect(head?.next).not.toBeNull();
@@ -149,12 +124,7 @@ describe('LinkedList Tester', () => {
       it('연결리스트의 마지막 노드가 처음 unshift된 노드와 같은가', () => {
         const mockSingleLinkedList = generateInstance();
         mockSingleLinkedList.unshift(mockNodeHead);
-        handleMethodWithRandomNumber(
-          'unshift',
-          randomInt,
-          mockSingleLinkedList,
-          mockNodeBody
-        );
+        handleMethodWithRandomNumber('unshift', randomInt, mockSingleLinkedList, mockNodeBody);
         mockSingleLinkedList.unshift(mockNodeLast);
         const head = mockSingleLinkedList.getHead();
         const lastNode = head && findLastNode(head);
@@ -169,12 +139,7 @@ describe('LinkedList Tester', () => {
     beforeEach(() => {
       mockSingleLinkedList = generateInstance();
       randomInt = getRandomInt(10, 20);
-      handleMethodWithRandomNumber(
-        'push',
-        randomInt,
-        mockSingleLinkedList,
-        mockNodeBody
-      );
+      handleMethodWithRandomNumber('push', randomInt, mockSingleLinkedList, mockNodeBody);
     });
     it('연결리스트에 search(index)가 존재하나', () => {
       expect(typeof mockSingleLinkedList.search).toBe('function');
@@ -201,12 +166,7 @@ describe('LinkedList Tester', () => {
     beforeEach(() => {
       mockSingleLinkedList = generateInstance();
       randomInt = getRandomInt(10, 20);
-      handleMethodWithRandomNumber(
-        'push',
-        randomInt,
-        mockSingleLinkedList,
-        mockNodeBody
-      );
+      handleMethodWithRandomNumber('push', randomInt, mockSingleLinkedList, mockNodeBody);
     });
     it('연결리스트에 insert메서드(data, index)가 존재하나', () => {
       expect(typeof mockSingleLinkedList.insert).toBe('function');
@@ -254,12 +214,7 @@ describe('LinkedList Tester', () => {
     beforeEach(() => {
       mockSingleLinkedList = generateInstance();
       randomInt = getRandomInt(10, 20);
-      handleMethodWithRandomNumber(
-        'push',
-        randomInt,
-        mockSingleLinkedList,
-        mockNodeBody
-      );
+      handleMethodWithRandomNumber('push', randomInt, mockSingleLinkedList, mockNodeBody);
     });
     it('연결리스트에 delete(index)가 존재하나', () => {
       expect(typeof mockSingleLinkedList.delete).toBe('function');

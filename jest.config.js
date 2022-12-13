@@ -5,6 +5,11 @@ module.exports = {
   moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'json'],
   roots: ['<rootDir>'],
   moduleNameMapper: {
-    '@/(.*)': '<rootDir>/src/$1',
+    '@src/(.*)': '<rootDir>/src/$1',
+    '@utils/(.*)': '<rootDir>/utils/$1',
+    '@datastructure/(.*)': '<rootDir>/datastructure/$1',
+    '@algorithm/(.*)': '<rootDir>/algorithm/$1',
+    '@boj/(.*)': '<rootDir>/boj/$1',
+    '@pgs/(.*)': '<rootDir>/pgs/$1',
   },
 };

@@ -1,3 +1,3 @@
-// import '@/algorithm/graphSearch';
-// import '@/datastructure/Tree';
-import '@/datastructure/BinarySearchTree';
+// import '@algorithm/graphSearch';
+// import '@datastructure/Tree';
+import '@datastructure/BinarySearchTree';

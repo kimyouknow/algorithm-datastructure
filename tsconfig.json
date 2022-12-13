@@ -10,7 +10,12 @@
     "baseUrl": ".",
     "outDir": "./dist",
     "paths": {
-      "@/*": ["src/*"]
+      "@src/*": ["src/*"],
+      "@utils/*": ["utils/*"],
+      "@datastructure/*": ["datastructure/*"],
+      "@algorithm/*": ["algorithm/*"],
+      "@boj/*": ["boj/*"],
+      "@pgs/*": ["pgs/*"]
     },
     "forceConsistentCasingInFileNames": true
   },

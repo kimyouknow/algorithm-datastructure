@@ -1,5 +1,5 @@
-import AdjacencyListGraph from '@/datastructure/AdjacencyListGraph';
-import AdjacencyMatrixGraph from '@/datastructure/AdjacencyMatrixGraph';
+import AdjacencyListGraph from '@datastructure/Graph/AdjacencyListGraph';
+import AdjacencyMatrixGraph from '@datastructure/Graph/AdjacencyMatrixGraph';
 
 export class SearchAdjMatrixGraph extends AdjacencyMatrixGraph {
   private vistedVertex: { [key: string]: boolean };
