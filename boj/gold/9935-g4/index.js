@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 const rawInputs = fs
-  .readFileSync(path.resolve(__dirname, '../9335-g4/1.txt'))
+  .readFileSync(path.resolve(__dirname, '../9935-g4/1.txt'))
   .toString()
   .trim()
   .split('\n');
