@@ -10,6 +10,12 @@ export class MinHeap {
     this.arr.push(value);
     return this;
   }
+  swap(index1: number, index2: number) {
+    const temp = this.arr[index1];
+    this.arr[index1] = this.arr[index2];
+    this.arr[index2] = temp;
+    return this;
+  }
 }
 
 const minHeap = new MinHeap();
