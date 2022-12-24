@@ -5,7 +5,7 @@ describe('Heap datastructure test', () => {
     it('Create Heap instance', () => {
       const minHeap = new MinHeap();
       expect(minHeap).toBeInstanceOf(MinHeap);
-      expect(minHeap.showEntireMinHeap()).toStrictEqual([null]);
+      expect(minHeap.showEntireMinHeap()).toStrictEqual([]);
     });
   });
   describe('Push: push new value to Min Heap', () => {
@@ -37,8 +37,8 @@ describe('Heap datastructure test', () => {
     const node3 = 5;
     const idx1 = 1;
     const idx2 = 2;
-    let prevArr: Array<number | null>;
-    let nextArr: Array<number | null>;
+    let prevArr: Array<number>;
+    let nextArr: Array<number>;
     let prevIndex1: number;
     let prevIndex2: number;
     beforeEach(() => {
@@ -46,8 +46,8 @@ describe('Heap datastructure test', () => {
       spyOnSwap = jest.spyOn(minHeap, 'swap');
       minHeap.push(node1).push(node2).push(node3);
       prevArr = minHeap.showEntireMinHeap();
-      prevIndex1 = prevArr[1] as number;
-      prevIndex2 = prevArr[2] as number;
+      prevIndex1 = prevArr[1];
+      prevIndex2 = prevArr[2];
       minHeap.swap(idx1, idx2);
       nextArr = minHeap.showEntireMinHeap();
     });
@@ -68,6 +68,29 @@ describe('Heap datastructure test', () => {
     it('The length of Arr should be same after run swap method', () => {
       const nextArr = minHeap.showEntireMinHeap();
       expect(prevArr.length).toBe(nextArr.length);
+    });
+  });
+  describe('HeapifyUp: children nodes should be bigger than parent node', () => {
+    let minHeap: MinHeap;
+    let spyOnHeapifyUp: jest.SpyInstance;
+    let privateHeapfyUp: () => MinHeap;
+    beforeEach(() => {
+      minHeap = new MinHeap();
+      spyOnHeapifyUp = jest.spyOn(Object.getPrototypeOf(minHeap), 'heapifyUp');
+      privateHeapfyUp = minHeap['heapifyUp'];
+      minHeap.push(10).push(20).push(30).push(1);
+    });
+    afterEach(() => {
+      spyOnHeapifyUp.mockClear();
+    });
+    it('new Node should be located corretly after heapifyUp', () => {
+      const prevArr = minHeap.showEntireMinHeap();
+      // @ts-expect-error -> for private method test 😅
+      minHeap.heapifyUp();
+      const nextArr = minHeap.showEntireMinHeap();
+      expect(prevArr).not.toStrictEqual(nextArr);
+      expect(nextArr[0]).toBe(1);
+      expect(nextArr).toStrictEqual([1, 10, 30, 20]);
     });
   });
 });
