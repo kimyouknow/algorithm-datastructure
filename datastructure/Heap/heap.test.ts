@@ -14,7 +14,8 @@ describe('Heap datastructure test', () => {
     const mockValue = 4;
     beforeEach(() => {
       minHeap = new MinHeap();
-      spyOnPush = jest.spyOn(minHeap, 'push');
+      spyOnPush = jest.spyOn(Object.getPrototypeOf(minHeap), 'push');
+      // @ts-expect-error -> for private method test 😅
       minHeap.push(mockValue);
     });
     afterEach(() => {
@@ -43,11 +44,13 @@ describe('Heap datastructure test', () => {
     let prevIndex2: number;
     beforeEach(() => {
       minHeap = new MinHeap();
-      spyOnSwap = jest.spyOn(minHeap, 'swap');
+      spyOnSwap = jest.spyOn(Object.getPrototypeOf(minHeap), 'swap');
+      // @ts-expect-error -> for private method test 😅
       minHeap.push(node1).push(node2).push(node3);
       prevArr = minHeap.showEntireMinHeap();
       prevIndex1 = prevArr[1];
       prevIndex2 = prevArr[2];
+      // @ts-expect-error -> for private method test 😅
       minHeap.swap(idx1, idx2);
       nextArr = minHeap.showEntireMinHeap();
     });
@@ -73,11 +76,10 @@ describe('Heap datastructure test', () => {
   describe('HeapifyUp: children nodes should be bigger than parent node', () => {
     let minHeap: MinHeap;
     let spyOnHeapifyUp: jest.SpyInstance;
-    let privateHeapfyUp: () => MinHeap;
     beforeEach(() => {
       minHeap = new MinHeap();
       spyOnHeapifyUp = jest.spyOn(Object.getPrototypeOf(minHeap), 'heapifyUp');
-      privateHeapfyUp = minHeap['heapifyUp'];
+      // @ts-expect-error -> for private method test 😅
       minHeap.push(10).push(20).push(30).push(1);
     });
     afterEach(() => {
@@ -91,6 +93,27 @@ describe('Heap datastructure test', () => {
       expect(prevArr).not.toStrictEqual(nextArr);
       expect(nextArr[0]).toBe(1);
       expect(nextArr).toStrictEqual([1, 10, 30, 20]);
+    });
+  });
+  describe('Insert new Node into min heap', () => {
+    let minHeap: MinHeap;
+    let spyOnInsert: jest.SpyInstance;
+    let mockInsertValues = [3, 7, 2, 1, 5, 9, 10];
+    beforeEach(() => {
+      minHeap = new MinHeap();
+      spyOnInsert = jest.spyOn(minHeap, 'insert');
+      mockInsertValues.forEach((v) => minHeap.insert(v));
+    });
+    afterEach(() => {
+      spyOnInsert.mockClear();
+    });
+    it('Insert method should be call with 1 number param', () => {
+      expect(spyOnInsert).toBeCalledWith(mockInsertValues[0]);
+      expect(typeof spyOnInsert.mock.calls[0][0]).toBe('number');
+    });
+    it('children node should be located in Min Heap corretctly', () => {
+      const resultArr = minHeap.showEntireMinHeap();
+      expect(resultArr).toStrictEqual([1, 2, 3, 7, 5, 9, 10]);
     });
   });
 });

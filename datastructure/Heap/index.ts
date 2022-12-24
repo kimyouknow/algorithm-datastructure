@@ -17,11 +17,11 @@ export class MinHeap {
   getRightChildIndex(i: number) {
     return i * 2 + 2;
   }
-  push(value: number) {
+  private push(value: number) {
     this.arr.push(value);
     return this;
   }
-  swap(index1: number, index2: number) {
+  private swap(index1: number, index2: number) {
     const temp = this.arr[index1];
     this.arr[index1] = this.arr[index2];
     this.arr[index2] = temp;
@@ -41,8 +41,10 @@ export class MinHeap {
     }
     return this;
   }
+  insert(value: number) {
+    return this.push(value).heapifyUp();
+  }
 }
 
 const minHeap = new MinHeap();
-minHeap.push(11).push(3).push(4).push(2).push(11).push(1);
 console.log(minHeap.showEntireMinHeap());
