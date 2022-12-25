@@ -75,9 +75,12 @@ export class MinHeap {
   }
   poll() {
     if (this.arr.length === 0) return undefined;
+    if (this.arr.length === 1) return this.arr.pop();
+
     const maxValue = this.arr[this.arr.length - 1];
-    this.arr.pop();
     const minValue = this.arr[0];
+    this.arr.pop();
+
     this.arr[0] = maxValue;
     this.heapifyDown();
     return minValue;
@@ -86,7 +89,3 @@ export class MinHeap {
 
 const minHeap = new MinHeap();
 [3, 7, 2, 1, 5, 9, 10].forEach((v) => minHeap.insert(v));
-console.log(minHeap.showEntireMinHeap());
-const res = minHeap.poll();
-console.log('res', res);
-console.log(minHeap.showEntireMinHeap());

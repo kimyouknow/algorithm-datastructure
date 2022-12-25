@@ -163,4 +163,18 @@ describe('Heap datastructure test', () => {
       expect(res).toBeUndefined();
     });
   });
+  describe('Entire action', () => {
+    let minHeap: MinHeap;
+    let mockInsertValues = [3, 7, 2, 1, 5, 9, 10];
+    beforeEach(() => {
+      minHeap = new MinHeap();
+    });
+    afterEach(() => {});
+    it('The result of repeating the poll by the length of the array should be same with ascending order', () => {
+      mockInsertValues.forEach((v) => minHeap.insert(v));
+      const res = mockInsertValues.map((v) => minHeap.poll());
+      const asc = [...mockInsertValues].sort((a, b) => a - b);
+      expect(asc).toStrictEqual(res);
+    });
+  });
 });
