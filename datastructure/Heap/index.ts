@@ -85,6 +85,9 @@ export class MinHeap {
     this.heapifyDown();
     return minValue;
   }
+  find() {
+    return this.arr[0];
+  }
 }
 
 const minHeap = new MinHeap();
