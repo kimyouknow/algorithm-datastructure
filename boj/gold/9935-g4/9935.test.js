@@ -2,7 +2,7 @@ const { solution } = require('./index');
 
 const parser = (rawInputs) => rawInputs.toString().trim().split('\n');
 
-describe('9335-g4 tester', () => {
+describe('9935-g4 tester', () => {
   it('1', () => {
     const ex1 = parser('mirkovC4nizCC44\nC4');
     expect(solution(ex1)).toBe('mirkovniz');
