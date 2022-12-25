@@ -67,20 +67,23 @@ export class MinHeap {
         currentIdx = smallerChildIdx;
       } else break;
     }
-
     return this;
   }
   insert(value: number) {
     return this.push(value).heapifyUp();
   }
   poll() {
+    // heap이 비어있으면 undefined 반환
     if (this.arr.length === 0) return undefined;
+    // heap에 1의 원소만 있으면 해당 원소만 반환
     if (this.arr.length === 1) return this.arr.pop();
 
     const maxValue = this.arr[this.arr.length - 1];
     const minValue = this.arr[0];
     this.arr.pop();
 
+    // 0번 인덱스를 반환 후, 0번 인덱스에 최대 값 삽입
+    // 이후 heapifyDown 실행
     this.arr[0] = maxValue;
     this.heapifyDown();
     return minValue;
@@ -90,5 +93,9 @@ export class MinHeap {
   }
 }
 
+const mockArr = [3, 7, 2, 1, 5, 9, 10];
 const minHeap = new MinHeap();
-[3, 7, 2, 1, 5, 9, 10].forEach((v) => minHeap.insert(v));
+mockArr.forEach((v) => minHeap.insert(v));
+console.log('heap', minHeap.showEntireMinHeap());
+const res = mockArr.map((v) => minHeap.poll());
+console.log('res', res);
