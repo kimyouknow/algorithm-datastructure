@@ -7,8 +7,6 @@ export class MinHeap {
     return [...this.arr];
   }
   getParentIndex(i: number) {
-    {
-    }
     return Math.floor((i - 1) / 2);
   }
   getLeftChildIndex(i: number) {
@@ -102,8 +100,6 @@ export class MaxHeap {
     return [...this.arr];
   }
   getParentIndex(i: number) {
-    {
-    }
     return Math.floor((i - 1) / 2);
   }
   getLeftChildIndex(i: number) {
@@ -148,7 +144,7 @@ export class MaxHeap {
       const leftChildIdx = this.getLeftChildIndex(currentIdx);
       const rightChildIdx = this.getRightChildIndex(currentIdx);
 
-      let biggerChildIdx = this.getLeftChildIndex(currentIdx);
+      let biggerChildIdx = leftChildIdx;
       // 왼쪽 자식이 없으면 오른쪽 자식을 가장 작은 노드로 사용
       // 왼쪽 자식이 있으면 오른쪽 자식과 비교해서 더 큰 노드 수정
       if (this.arr[rightChildIdx]) {
