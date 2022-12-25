@@ -41,10 +41,52 @@ export class MinHeap {
     }
     return this;
   }
+  /**
+   * poll이후에 수정된 최상단노드가 올바른 자리로 찾아가게 하는 함수
+   */
+  private heapifyDown() {
+    let currentIdx = 0;
+    const count = this.arr.length;
+
+    // 왼쪽 요소가 있을 때까지 검사
+    while (this.getLeftChildIndex(currentIdx) < count) {
+      const leftChildIdx = this.getLeftChildIndex(currentIdx);
+      const rightChildIdx = this.getRightChildIndex(currentIdx);
+
+      let smallerChildIdx = this.getLeftChildIndex(currentIdx);
+      // 오른쪽 자식이 없으면 왼쪽 자식을 가장 작은 노드로 사용
+      // 오른쪽 자식이 있으면 왼쪽 자식과 비교해서 가장 작은 노드 수정
+      if (this.arr[rightChildIdx]) {
+        smallerChildIdx =
+          this.arr[rightChildIdx] < this.arr[leftChildIdx] ? rightChildIdx : leftChildIdx;
+      }
+
+      // 현재 탐색하고 있는 노드의 부모 노드가 탐색하고 있는 노드보다 값이 크다면 (= 우선 순위가 낮다면) 탐색 중인 노드를 대체한다.
+      if (this.arr[smallerChildIdx] <= this.arr[currentIdx]) {
+        this.swap(smallerChildIdx, currentIdx);
+        currentIdx = smallerChildIdx;
+      } else break;
+    }
+
+    return this;
+  }
   insert(value: number) {
     return this.push(value).heapifyUp();
+  }
+  poll() {
+    if (this.arr.length === 0) return undefined;
+    const maxValue = this.arr[this.arr.length - 1];
+    this.arr.pop();
+    const minValue = this.arr[0];
+    this.arr[0] = maxValue;
+    this.heapifyDown();
+    return minValue;
   }
 }
 
 const minHeap = new MinHeap();
+[3, 7, 2, 1, 5, 9, 10].forEach((v) => minHeap.insert(v));
+console.log(minHeap.showEntireMinHeap());
+const res = minHeap.poll();
+console.log('res', res);
 console.log(minHeap.showEntireMinHeap());

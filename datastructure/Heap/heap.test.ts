@@ -116,4 +116,51 @@ describe('Heap datastructure test', () => {
       expect(resultArr).toStrictEqual([1, 2, 3, 7, 5, 9, 10]);
     });
   });
+  describe('Poll & heapifyDown: extract root node', () => {
+    let minHeap: MinHeap;
+    let spyOnHeapifyDown: jest.SpyInstance;
+    let spyOnPoll: jest.SpyInstance;
+    let mockInsertValues = [3, 7, 2, 1, 5, 9, 10];
+    let pollResult: number;
+    let prevArr: number[];
+    beforeEach(() => {
+      minHeap = new MinHeap();
+      spyOnHeapifyDown = jest.spyOn(Object.getPrototypeOf(minHeap), 'heapifyDown');
+      spyOnPoll = jest.spyOn(minHeap, 'poll');
+      mockInsertValues.forEach((v) => minHeap.insert(v));
+      prevArr = minHeap.showEntireMinHeap();
+      pollResult = minHeap.poll() as number;
+    });
+    afterEach(() => {
+      spyOnHeapifyDown.mockClear();
+      spyOnPoll.mockClear();
+    });
+    it('HeapifyDown should be called with poll', () => {
+      expect(spyOnHeapifyDown).toBeCalled();
+    });
+    it('HeapifyDown should be call with no param ', () => {
+      expect(spyOnHeapifyDown.mock.calls[0][0]).toBeUndefined();
+    });
+    it('Result of poll should be minimun of mockInsertValues', () => {
+      const mockMin = Math.min(...mockInsertValues);
+      expect(pollResult).toBe(mockMin);
+    });
+    it('Result of poll should be 0 index of heap', () => {
+      const index0 = prevArr[0];
+      expect(pollResult).toBe(index0);
+    });
+    it('After poll, heap size should be reduced by 1', () => {
+      const nextArr = minHeap.showEntireMinHeap();
+      expect(nextArr.length).toBe(prevArr.length - 1);
+    });
+    it('After poll, children should be located corretly ', () => {
+      const nextArr = minHeap.showEntireMinHeap();
+      expect(nextArr).toStrictEqual([2, 5, 3, 7, 10, 9]);
+    });
+    it('if Heap is empty, poll return undefined', () => {
+      const minHeap = new MinHeap();
+      const res = minHeap.poll();
+      expect(res).toBeUndefined();
+    });
+  });
 });
