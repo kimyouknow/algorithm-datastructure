@@ -3,13 +3,32 @@ const fs = require('fs');
 
 const rawInputs = fs
   //	.readFileSync('/dev/stdin')
-  .readFileSync(path.resolve(__dirname, '../1927-s2/1.txt'))
+  .readFileSync(path.resolve(__dirname, '../1715-g4/1.txt'))
   .toString()
   .trim()
   .split('\n')
   .map((v) => +v);
 
-class Heap {
+// // 단순 정렬 메모리 초과
+// const solution = (rawInputs) => {
+//   const [n, ...arr] = rawInputs;
+//   let desc = arr.sort((a, b) => b - a);
+//   let answer = 0;
+//   if (n === 1) return arr[0];
+
+//   while (desc.length > 1) {
+//     const min1 = desc.pop();
+//     const min2 = desc.pop();
+//     const sum = min1 + min2;
+//     answer += sum;
+//     desc.push(sum);
+//     desc = desc.sort((a, b) => b - a);
+//   }
+//   return answer;
+// };
+
+// 우선순위 큐
+class Pq {
   constructor(compare) {
     this.arr = [];
     this.compare = compare;
@@ -91,36 +110,21 @@ class Heap {
   }
 }
 
-class Pq extends Heap {
-  constructor(compare) {
-    super(compare);
-  }
-  isEmpty() {
-    const length = this.arr.length;
-    return length === 0;
-  }
-  enqueue(value) {
-    return this.insert(value);
-  }
-  dequeue() {
-    return this.poll();
-  }
-}
-
 const solution = (rawInputs) => {
   const [n, ...arr] = rawInputs;
+  if (n === 1) return 0;
   const pq = new Pq((a, b) => a < b);
-  const answer = [];
-  arr.map((v) => {
-    if (v === 0) {
-      let res = pq.dequeue();
-      res = res === undefined ? 0 : res;
-      answer.push(res);
-    } else {
-      pq.enqueue(v);
-    }
-  });
-  return answer.join('\n');
+  arr.forEach((v) => pq.insert(v));
+  let answer = 0;
+
+  while (pq.arr.length > 1) {
+    const min1 = pq.poll();
+    const min2 = pq.poll();
+    const sum = min1 + min2;
+    answer += sum;
+    pq.insert(sum);
+  }
+  return answer;
 };
 
 console.log(solution(rawInputs));
