@@ -4,7 +4,7 @@ describe('Prioirty Queue ADT test', () => {
   let pq: PrioirtyQueue;
   let mockArr: number[];
   beforeEach(() => {
-    pq = new PrioirtyQueue();
+    pq = new PrioirtyQueue((a, b) => a > b); // max
     mockArr = Array.from({ length: 100 }, () => Math.floor(Math.random() * 100));
   });
   it('Result of dequeue should be ascending order', () => {

@@ -1,19 +1,24 @@
-import { MinHeap } from '@datastructure/Heap';
+import Heap from '@datastructure/Heap';
+
+const minCompare = (a: number, b: number) => a < b;
+const maxCompare = (a: number, b: number) => a > b;
+const absoluteCompare = (a: number, b: number) =>
+  Math.abs(a) === Math.abs(b) ? a < b : Math.abs(a) < Math.abs(b);
 
 describe('Heap datastructure test', () => {
   describe('Initialize Min Heap', () => {
     it('Create Heap instance', () => {
-      const minHeap = new MinHeap();
-      expect(minHeap).toBeInstanceOf(MinHeap);
+      const minHeap = new Heap(minCompare);
+      expect(minHeap).toBeInstanceOf(Heap);
       expect(minHeap.showEntireMinHeap()).toStrictEqual([]);
     });
   });
   describe('Push: push new value to Min Heap', () => {
-    let minHeap: MinHeap;
+    let minHeap: Heap;
     let spyOnPush: jest.SpyInstance;
     const mockValue = 4;
     beforeEach(() => {
-      minHeap = new MinHeap();
+      minHeap = new Heap(minCompare);
       spyOnPush = jest.spyOn(Object.getPrototypeOf(minHeap), 'push');
       // @ts-expect-error -> for private method test 😅
       minHeap.push(mockValue);
@@ -31,7 +36,7 @@ describe('Heap datastructure test', () => {
     });
   });
   describe('Swap: switch index of node1 and node2', () => {
-    let minHeap: MinHeap;
+    let minHeap: Heap;
     let spyOnSwap: jest.SpyInstance;
     const node1 = 3;
     const node2 = 4;
@@ -43,7 +48,7 @@ describe('Heap datastructure test', () => {
     let prevIndex1: number;
     let prevIndex2: number;
     beforeEach(() => {
-      minHeap = new MinHeap();
+      minHeap = new Heap(minCompare);
       spyOnSwap = jest.spyOn(Object.getPrototypeOf(minHeap), 'swap');
       // @ts-expect-error -> for private method test 😅
       minHeap.push(node1).push(node2).push(node3);
@@ -74,10 +79,10 @@ describe('Heap datastructure test', () => {
     });
   });
   describe('HeapifyUp: children nodes should be bigger than parent node', () => {
-    let minHeap: MinHeap;
+    let minHeap: Heap;
     let spyOnHeapifyUp: jest.SpyInstance;
     beforeEach(() => {
-      minHeap = new MinHeap();
+      minHeap = new Heap(minCompare);
       spyOnHeapifyUp = jest.spyOn(Object.getPrototypeOf(minHeap), 'heapifyUp');
       // @ts-expect-error -> for private method test 😅
       minHeap.push(10).push(20).push(30).push(1);
@@ -96,11 +101,11 @@ describe('Heap datastructure test', () => {
     });
   });
   describe('Insert new Node into min heap', () => {
-    let minHeap: MinHeap;
+    let minHeap: Heap;
     let spyOnInsert: jest.SpyInstance;
     let mockInsertValues = [3, 7, 2, 1, 5, 9, 10];
     beforeEach(() => {
-      minHeap = new MinHeap();
+      minHeap = new Heap(minCompare);
       spyOnInsert = jest.spyOn(minHeap, 'insert');
       mockInsertValues.forEach((v) => minHeap.insert(v));
     });
@@ -117,14 +122,14 @@ describe('Heap datastructure test', () => {
     });
   });
   describe('Poll & heapifyDown: extract root node', () => {
-    let minHeap: MinHeap;
+    let minHeap: Heap;
     let spyOnHeapifyDown: jest.SpyInstance;
     let spyOnPoll: jest.SpyInstance;
     let mockInsertValues = [3, 7, 2, 1, 5, 9, 10];
     let pollResult: number;
     let prevArr: number[];
     beforeEach(() => {
-      minHeap = new MinHeap();
+      minHeap = new Heap(minCompare);
       spyOnHeapifyDown = jest.spyOn(Object.getPrototypeOf(minHeap), 'heapifyDown');
       spyOnPoll = jest.spyOn(minHeap, 'poll');
       mockInsertValues.forEach((v) => minHeap.insert(v));
@@ -158,23 +163,40 @@ describe('Heap datastructure test', () => {
       expect(nextArr).toStrictEqual([2, 5, 3, 7, 10, 9]);
     });
     it('if Heap is empty, poll return undefined', () => {
-      const minHeap = new MinHeap();
+      const minHeap = new Heap(minCompare);
       const res = minHeap.poll();
       expect(res).toBeUndefined();
     });
   });
   describe('Entire action', () => {
-    let minHeap: MinHeap;
-    let mockInsertValues = [3, 7, 2, 1, 5, 9, 10];
+    let minHeap: Heap;
+    let maxHeap: Heap;
+    let absoulteHeap: Heap;
+    let mockArr = [-3, -7, 3, 7, 2, 1, 5, 9, 10, -5];
     beforeEach(() => {
-      minHeap = new MinHeap();
+      minHeap = new Heap(minCompare);
+      maxHeap = new Heap(maxCompare);
+      absoulteHeap = new Heap(absoluteCompare);
     });
-    afterEach(() => {});
-    it('The result of repeating the poll by the length of the array should be same with ascending order', () => {
-      mockInsertValues.forEach((v) => minHeap.insert(v));
-      const res = mockInsertValues.map((v) => minHeap.poll());
-      const asc = [...mockInsertValues].sort((a, b) => a - b);
+    it('Ascending: The result of repeating the poll by the length of the array should be same with ascending order', () => {
+      mockArr.forEach((v) => minHeap.insert(v));
+      const res = mockArr.map((v) => minHeap.poll());
+      const asc = [...mockArr].sort((a, b) => a - b);
       expect(asc).toStrictEqual(res);
+    });
+    it('Descending: The result of repeating the poll by the length of the array should be same with descending order', () => {
+      mockArr.forEach((v) => maxHeap.insert(v));
+      const res = mockArr.map((v) => maxHeap.poll());
+      const des = [...mockArr].sort((a, b) => b - a);
+      expect(des).toStrictEqual(res);
+    });
+    it('Absolute: The result of repeating the poll by the length of the array should be same with absolute order', () => {
+      mockArr.forEach((v) => minHeap.insert(v));
+      const res = mockArr.map((v) => minHeap.poll());
+      const abs = [...mockArr].sort((a, b) =>
+        Math.abs(a) === Math.abs(b) ? Math.abs(a) - Math.abs(b) : a - b
+      );
+      expect(abs).toStrictEqual(res);
     });
   });
 });
