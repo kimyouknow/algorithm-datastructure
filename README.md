@@ -15,6 +15,7 @@
 
 - [BOJ] : 백준
 - [PGS] : 프로그래머스
+- [LEET] : 리드코드
 
 ### git commit example
 
